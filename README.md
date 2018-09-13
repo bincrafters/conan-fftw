@@ -2,7 +2,7 @@
 
 | Bintray | Windows | Linux & macOS |
 |:--------:|:---------:|:-----------------:|
-|[ ![Download](https://api.bintray.com/packages/hlysunnaram/public-conan/conan-fftw/images/download.svg) ](https://bintray.com/hlysunnaram/public-conan/conan-fftw/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/hlysunnaram/conan-fftw?svg=true)](https://ci.appveyor.com/project/hlysunnaram/conan-fftw)|[![Build Status](https://travis-ci.org/hlysunnaram/conan-fftw.svg)](https://travis-ci.org/hlysunnaram/conan-fftw)|
+| [ ![Download](https://api.bintray.com/packages/hlysunnaram/public-conan/fftw%3Ahlysunnaram/images/download.svg) ](https://bintray.com/hlysunnaram/public-conan/fftw%3Ahlysunnaram/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/hlysunnaram/conan-fftw?svg=true)](https://ci.appveyor.com/project/hlysunnaram/conan-fftw)|[![Build Status](https://travis-ci.org/hlysunnaram/conan-fftw.svg)](https://travis-ci.org/hlysunnaram/conan-fftw)|
 
 ## Conan.io Information
 
