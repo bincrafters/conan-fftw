@@ -8,10 +8,10 @@ import os
 class FFTWConan(ConanFile):
     name = "fftw"
     version = "3.3.8"
-    description = "C subroutine library for computing the discrete Fourier transform (DFT) in one or more dimensions"
-    url = "https://github.com/hlysunnaram/conan-fftw"
-    homepage = "https://github.com/FFTW/fftw3"
-    author = "Herve Ly-Sunnaram <herve.ly-sunnaram@c-s.fr>"
+    description = "C subroutine library for computing the Discrete Fourier Transform (DFT) in one or more dimensions"
+    url = "https://github.com/bincrafters/conan-fftw"
+    homepage = "http://www.fftw.org/"
+    author = "Bincrafters <bincrafters@gmail.com>"
     license = "GPL-2.0"
     exports = ["COPYRIGHT"]
     exports_sources = ["CMakeLists.txt"]
@@ -21,8 +21,8 @@ class FFTWConan(ConanFile):
                "openmp": [True, False], "threads": [True, False], "combinedthreads": [True, False]}
     default_options = "shared=False", "fPIC=True", "precision=double", "openmp=False", "threads=False", \
                       "combinedthreads=False"
-    source_subfolder = "source_subfolder"
-    build_subfolder = "build_subfolder"
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -32,7 +32,7 @@ class FFTWConan(ConanFile):
         source_url = "http://www.fftw.org"
         tools.get("{0}/fftw-{1}.tar.gz".format(source_url, self.version))
         extracted_dir = self.name + "-" + self.version
-        os.rename(extracted_dir, self.source_subfolder)
+        os.rename(extracted_dir, self._source_subfolder)
 
     def configure_cmake(self):
         cmake = CMake(self)
@@ -44,9 +44,7 @@ class FFTWConan(ConanFile):
             cmake.definitions["ENABLE_FLOAT"] = "ON"
         elif self.options.precision == "longdouble":
             cmake.definitions["ENABLE_LONG_DOUBLE"] = "ON"
-        if self.settings.os != 'Windows':
-            cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
-        cmake.configure(build_folder=self.build_subfolder)
+        cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def build(self):
@@ -54,7 +52,7 @@ class FFTWConan(ConanFile):
         cmake.build()
 
     def package(self):
-        self.copy(pattern="COPYRIGHT", dst="licenses", src=self.source_subfolder)
+        self.copy(pattern="COPYRIGHT", dst="licenses", src=self._source_subfolder)
         cmake = self.configure_cmake()
         cmake.install()
 
