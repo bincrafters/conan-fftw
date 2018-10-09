@@ -17,8 +17,10 @@ class FFTWConan(ConanFile):
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False], "fPIC": [True, False], "precision": ["double", "single", "longdouble"]}
-    default_options = "shared=False", "fPIC=True", "precision=double"
+    options = {"shared": [True, False], "fPIC": [True, False], "precision": ["double", "single", "longdouble"],
+               "openmp": [True, False], "threads": [True, False], "combinedthreads": [True, False]}
+    default_options = "shared=False", "fPIC=True", "precision=double", "openmp=False", "threads=False", \
+                      "combinedthreads=False"
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
 
@@ -34,6 +36,10 @@ class FFTWConan(ConanFile):
 
     def configure_cmake(self):
         cmake = CMake(self)
+        cmake.definitions["BUILD_TESTS"] = "OFF"
+        cmake.definitions["ENABLE_OPENMP"] = "ON" if self.options.openmp else "OFF"
+        cmake.definitions["ENABLE_THREADS"] = "ON" if self.options.threads else "OFF"
+        cmake.definitions["WITH_COMBINED_THREADS"] = "ON" if self.options.combinedthreads else "OFF"
         if self.options.precision == "single":
             cmake.definitions["ENABLE_FLOAT"] = "ON"
         elif self.options.precision == "longdouble":
