@@ -1,6 +1,6 @@
 [![Download](https://api.bintray.com/packages/bincrafters/public-conan/fftw%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/fftw%3Abincrafters/_latestVersion)
-[![Build Status](https://travis-ci.org/bincrafters/conan-fftw.svg?branch=conan%2F3.3.8)](https://travis-ci.org/bincrafters/conan-fftw)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-fftw?branch=conan%2F3.3.8&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-fftw)
+[![Build Status](https://travis-ci.org/bincrafters/conan-fftw.svg?branch=stable%2F3.3.8)](https://travis-ci.org/bincrafters/conan-fftw)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-fftw?branch=stable%2F3.3.8&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-fftw)
 
 [Conan.io](https://conan.io) package recipe for [*fftw*](http://www.fftw.org/).
 
@@ -12,14 +12,14 @@ The packages generated with this **conanfile** can be found on [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install fftw/3.3.8@bincrafters/conan
+    $ conan install fftw/3.3.8@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    fftw/3.3.8@bincrafters/conan
+    fftw/3.3.8@bincrafters/stable
 
     [generators]
     cmake
@@ -38,7 +38,7 @@ The example below shows the commands used to publish to bincrafters conan reposi
 
 The following command both runs all the steps of the conan file, and publishes the package to the local system cache.  This includes downloading dependencies from "build_requires" and "requires" , and then running the build() method.
 
-    $ conan create bincrafters/conan
+    $ conan create bincrafters/stable
 
 
 ### Available Options
@@ -57,7 +57,7 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload fftw/3.3.8@bincrafters/conan --all -r bincrafters
+    $ conan upload fftw/3.3.8@bincrafters/stable --all -r bincrafters
 
 
 ## Conan Recipe License
