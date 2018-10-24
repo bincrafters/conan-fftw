@@ -19,10 +19,13 @@ class FFTWConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False], "precision": ["double", "single", "longdouble"],
                "openmp": [True, False], "threads": [True, False], "combinedthreads": [True, False]}
-    default_options = "shared=False", "fPIC=True", "precision=double", "openmp=False", "threads=False", \
-                      "combinedthreads=False"
+    default_options = {'shared': False, 'fPIC': True, 'precision': 'double', 'openmp': False, 'threads': False,
+                       'combinedthreads': False}
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -34,26 +37,24 @@ class FFTWConan(ConanFile):
         extracted_dir = self.name + "-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
-    def configure_cmake(self):
+    def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.definitions["BUILD_TESTS"] = "OFF"
-        cmake.definitions["ENABLE_OPENMP"] = "ON" if self.options.openmp else "OFF"
-        cmake.definitions["ENABLE_THREADS"] = "ON" if self.options.threads else "OFF"
-        cmake.definitions["WITH_COMBINED_THREADS"] = "ON" if self.options.combinedthreads else "OFF"
-        if self.options.precision == "single":
-            cmake.definitions["ENABLE_FLOAT"] = "ON"
-        elif self.options.precision == "longdouble":
-            cmake.definitions["ENABLE_LONG_DOUBLE"] = "ON"
+        cmake.definitions["BUILD_TESTS"] = False
+        cmake.definitions["ENABLE_OPENMP"] = self.options.openmp
+        cmake.definitions["ENABLE_THREADS"] = self.options.threads
+        cmake.definitions["WITH_COMBINED_THREADS"] = self.options.combinedthreads
+        cmake.definitions["ENABLE_FLOAT"] = self.options.precision == "single"
+        cmake.definitions["ENABLE_LONG_DOUBLE"] = self.options.precision == "longdouble"
         cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def build(self):
-        cmake = self.configure_cmake()
+        cmake = self._configure_cmake()
         cmake.build()
 
     def package(self):
         self.copy(pattern="COPYRIGHT", dst="licenses", src=self._source_subfolder)
-        cmake = self.configure_cmake()
+        cmake = self._configure_cmake()
         cmake.install()
 
     def package_info(self):
